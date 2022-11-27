@@ -1,6 +1,7 @@
 import src.sms_notification as sms_notification
 import src.wpp_notification as wpp_notification
 import src.call_notification as call_notification
+import src.email_notification as email_notification
 
 import json
 
@@ -24,6 +25,12 @@ async def sms(body: Notification):
 async def wpp(body: Notification):
     body_json = json.dumps(body.dict())
     sid = wpp_notification.send_notification(body_json)
+    return sid
+
+@app.get("/email")
+async def email(body: Notification):
+    body_json = json.dumps(body.dict())
+    sid = email_notification.send_notification(body_json)
     return sid
 
 @app.get("/call")
